@@ -25,7 +25,8 @@ Periksa apakah huruf yang diberikan user ada dalam kata rahasia anda dengan meng
 '''
 
 secretwordlist = ["pudding", "gulali", "Lampu", "Banana", "IKAN"]
-scorehistory = 100
+scorehistoryWIN = 0
+scorehistoryLOSE = 0
 
 
 def updateText(secret_word,display_text, guess):
@@ -49,7 +50,7 @@ def hangman(word) :
     print(display_text)
     
     while chances > 0 and "_" in display_text :
-        global scorehistory
+        global scorehistoryWIN, scorehistoryLOSE
         user_input = input('\nGuess a letter : ').lower()
         if len(user_input) == 1 and user_input.isalpha() :
             if user_input in inputted :
@@ -105,14 +106,16 @@ def hangman(word) :
             print("Make sure you only input one characters which is an alphabet\n")
 
     if "_" not in display_text :
-        scorehistory = "WIN"
+        scorehistoryWIN = scorehistoryWIN + 1
         print('\nCongratulations! You guessed the word The word was:', secret_word)    
-        print('YOU : ', scorehistory, "\n")  
+        print('You won : ', scorehistoryWIN)  
+        print('You lost : ', scorehistoryLOSE, "\n")  
         
     if chances == 0 :
-        scorehistory = "LOSE"
+        scorehistoryLOSE = scorehistoryLOSE + 1
         print('Sorry, you ran out of chances. The word was:', secret_word)
-        print('YOU : ', scorehistory, "\n")  
+        print('You won : ', scorehistoryWIN)  
+        print('You lost : ', scorehistoryLOSE, "\n")   
 
 def main() :
     while True : 

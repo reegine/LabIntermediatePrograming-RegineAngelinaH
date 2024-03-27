@@ -1,4 +1,5 @@
 import os
+import random
 # Clearing the Screen
 os.system('cls')
 
@@ -23,6 +24,10 @@ Pastikan user memberikan input yang valid (satu buah huruf)
 Periksa apakah huruf yang diberikan user ada dalam kata rahasia anda dengan mengabaikan kapitalisasi huruf. 
 '''
 
+secretwordlist = ["pudding", "gulali", "Lampu", "Banana", "IKAN"]
+scorehistory = 100
+
+
 def updateText(secret_word,display_text, guess):
     updated_text = ""
     for i in range(len(secret_word)):
@@ -35,18 +40,20 @@ def updateText(secret_word,display_text, guess):
 
 def hangman(word) :
     secret_word = word.lower()
-    print("ini yg secret word", word)
+    # print("ini yg secret word", word)
+    # print("ini isi yg list", secretwordlist)
     chances = 7
     inputted = ""
     display_text = "_" * len(secret_word)
     print('you have ', chances, " chances to guess")
     print(display_text)
     
-    while chances > 0 :
+    while chances > 0 and "_" in display_text :
+        global scorehistory
         user_input = input('\nGuess a letter : ').lower()
-        if len(user_input) == 1 :
+        if len(user_input) == 1 and user_input.isalpha() :
             if user_input in inputted :
-                print('you already guessed the letter, guess another letter')
+                print('you already guessed the letter, guess another letter\n')
                 # print(inputted)
             elif user_input in secret_word :
                 inputted += user_input.lower()
@@ -95,14 +102,37 @@ def hangman(word) :
                     print("--------")    
                 print("\n",display_text)
         else :
-            print('Incorrect amount of  characters')
+            print("Make sure you only input one characters which is an alphabet\n")
+
+    if "_" not in display_text :
+        scorehistory = "WIN"
+        print('\nCongratulations! You guessed the word The word was:', secret_word)    
+        print('YOU : ', scorehistory, "\n")  
         
-    if "_" not in display_text:
-        print('Congratulations! You guessed the word The word was:', secret_word)
-
     if chances == 0 :
+        scorehistory = "LOSE"
         print('Sorry, you ran out of chances. The word was:', secret_word)
+        print('YOU : ', scorehistory, "\n")  
 
+def main() :
+    while True : 
+        if secretwordlist == [] :
+            print("Congradulations!!\nYou have guessed all the word's I could think of :D")
+            break
+        else : 
+            print('Welcome To Hangman :D !!\n')
+            play = input("Do you want to play Hangman? (y/n): ").lower()
+            if play == "y" or play == "yes"  : 
+                # print("ini yg index print ",random.randint(0,len(secretwordlist)))
+                pickedword = secretwordlist[random.randint(0,len(secretwordlist))]
+                secretwordlist.remove(pickedword)
+                hangman(pickedword)
+                continue  
+            elif  play == "n" or play == "no" :
+                print("See you next time")
+                break
+            else : 
+                print("Please only input either y or n\n")
+                continue   
 
-print('Welcome To Hangman :D !!\n')
-hangman('PUDDING')
+main()

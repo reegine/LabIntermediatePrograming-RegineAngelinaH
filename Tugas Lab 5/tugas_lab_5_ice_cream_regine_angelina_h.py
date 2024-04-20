@@ -57,12 +57,37 @@ for key, value in sales_data.items() :
 # print("ini yg total_per_day",total_per_day)
 
 # 4. print in a report
-print("{:<15} {:<10} {:<10} {:<10} {:<10}".format('FLAVOR', 'VALUE1', 'VALUE2','VALUE3', 'SUM PER FALVOR' ))
- 
-# print each data item.
-for key, value in sales_data.items():
-    value1, value2, value3, value4 = value
-    print("{:<15} {:<10} {:<10} {:<10} {:<10}".format(key, value1, value2, value3, value4))
+def print_report() :
+    print("{:<15} {:<10} {:<10} {:<10} {:<10}".format('FLAVOR', 'DAY 1', 'DAY 2','DAY 3', 'SUM PER FALVOR' ))
+    
+    # print each data item.
+    for key, value in sales_data.items():
+        value1, value2, value3, value4 = value
+        print("{:<15} {:<10} {:<10} {:<10} {:<10}".format(key, value1, value2, value3, value4))
 
-print("Total per Day ", *total_per_day, sep="   ")
-print("\n")
+    # print("Total per Day ", *total_per_day, sep="   ")
+    print("{:<15} {:<10} {:<10} {:<10} {:<10}".format("Total Per Day", total_per_day[1], total_per_day[2], total_per_day[3], total_per_day[4]))
+    print("\n")
+
+print_report()
+
+
+with open("icecream_report.txt", "x") as file:
+    file.write("ICE CREAM REPORT\n")
+    file.write("================================================================\n")
+    a = "FLAVOR"
+    b = "DAY 1"
+    c = "DAY 2"
+    d = "DAY 3"
+    e = "SUM PER FLAVOR"
+    file.write(f"{a:<15} {b:<10} {c:<10} {d:<10} {e:<10}\n")
+    for key, value in sales_data.items():
+        value1, value2, value3, value4 = value
+        file.write(f"{key:<15} {str(value1):<10} {str(value2):<10} {str(value3):<10} {str(value4):<10}\n")
+        
+    print(f"Report successfully written to icecream_report.txt")
+    file.write("================================================================\n")
+    g = "Total per Day"
+    file.write(f"{g:<15} {total_per_day[1]:<10} {total_per_day[2]:<10} {total_per_day[3]:<10} {total_per_day[4]:<10}\n")
+    file.write(f"\n\nMade by Regine Angelina H | NIM 23502310025")
+    file.close()
